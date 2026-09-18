@@ -1,0 +1,32 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+nav div:last-child {
+  display: flex;
+  gap: 24px;
+}
+
+nav a {
+  text-decoration: none;
+  color: inherit;
+}
+
+main {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+main h1 {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 56px;
+}
+
+main p {
+  margin-top: 20px;
+  font-size: 20px;
+}

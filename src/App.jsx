@@ -1,17 +1,18 @@
 import './App.css'
 import Navbar from './components/Navbar'
+import Hero from './components/Hero'
 
 function App() {
   return (
     <>
       <Navbar />
 
-      <main>
-        <h1>Turn participation into your next big thing</h1>
+      <Hero 
+       title='Turn participation into your next big thing.'
 
-        <p>Discover challenges. Participate. Create. Share. Grow.
-        </p>
-      </main>
+       description='Discover challanges. Participate. Create. Share. Grow.'
+      /> 
+
     </>  
   )
 }

@@ -30,3 +30,77 @@ main p {
   margin-top: 20px;
   font-size: 20px;
 }
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+}
+
+.hero-content {
+  max-width: 850px;
+  text-align: center;
+}
+
+.hero-label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5px;
+}
+
+.hero h1 {
+  margin: 20px 0;
+  font-size: 64px;
+  line-height: 1.06;
+}
+
+.hero-description {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 35px;
+}
+
+.hero-actions button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.secondary-button {
+  background-color: transparent;
+  border: 1px solid currentColor !important;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 20px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .hero-description {
+    font-size: 18px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions button {
+    width: 100%;
+  }
+}

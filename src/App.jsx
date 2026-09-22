@@ -1,6 +1,7 @@
 import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import ChallengeSection from './components/ChallengeSection'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
        description='Discover challanges. Participate. Create. Share. Grow.'
       /> 
 
+      <ChallengeSection />
     </>  
   )
 }

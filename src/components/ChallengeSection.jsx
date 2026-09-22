@@ -81,6 +81,7 @@ function ChallengeSection() {
                                 id={challenge.id}
                                 title={challenge.title}
                                 category={challenge.category}
+                                description={challenge.description}
                                 participants={challenge.participants}
                                 joined={challenge.joined}
                                 onJoin={joinChallenge}

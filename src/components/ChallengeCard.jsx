@@ -5,6 +5,8 @@ function ChallengeCard(props) {
 
             <h3>{props.title}</h3>
 
+            <p>{props.description}</p>
+
             <p>{props.participants.toLocaleString()} participants</p>
 
             <button onClick={() => props.onJoin(props.id)}

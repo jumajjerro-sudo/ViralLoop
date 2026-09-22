@@ -8,15 +8,24 @@ function CreateChallenge(props) {
     function handleSubmit(event) {
         event.preventDefault()
 
+        if (!title.trim() || !category || !description.trim()) {
+            alert('Please fill in all fields.')
+            return
+        }
+
         props.onCreate({
             title,
             category,
             description
         })
+
+        setTitle('')
+        setCategory('')
+        setDescription('')
     }
 
     return (
-        <section className='create-challenge'>
+        <section id='create-challenge' className='create-challenge'>
             <h2>Create a Challenge</h2>
             
             <form onSubmit={handleSubmit}>

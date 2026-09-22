@@ -11,7 +11,12 @@ function Hero(props) {
 
                 <div className='hero-actions'>
                     <button>Explore Challenges</button>
-                    <button className='secondary-button'>Create a Challenge</button>
+                    <button className='secondary-button'
+                    onClick={ () => {
+                        document.getElementById('create-challenge').scrollIntoView({ behavior: 'smooth' })
+                    }}>
+                        Create a Challenge
+                    </button>
                 </div>
             </div>
         </main>

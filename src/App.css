@@ -119,6 +119,46 @@ main p {
   opacity: 0.6;
 }
 
+.create-challenge {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 80px 20px;
+}
+
+.create-challenge h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.create-challenge form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create-challenge input,
+.create-challenge select,
+.create-challenge textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.create-challenge textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+.create-challenge button {
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 @media (max-width: 768px) {
   .hero {

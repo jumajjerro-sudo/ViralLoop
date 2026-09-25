@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Challenges from './pages/Challenges'
 import Create from './pages/Create'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import NotFound from './pages/NotFound'
 
 function App() {
 const [challenges, setChallenges] = useState([
@@ -96,6 +97,10 @@ function createChallenge(data) {
               onCreate={createChallenge} 
             />
           } 
+        />
+
+        <Route 
+          path='*' element={<NotFound />}
         />
 
       </Routes>

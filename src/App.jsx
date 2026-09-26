@@ -1,39 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Challenges from './pages/Challenges'
 import Create from './pages/Create'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NotFound from './pages/NotFound'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 
 function App() {
-const [challenges, setChallenges] = useState([
-  {
-    id: 1,
-    title: '30 Day Fitness Challenge',
-    category: 'Fitness',
-    participants: 12450,
-    joined: false,
-    description: 'Complete a fitness activity every day for 30 days.'
-  },
-  {
-    id: 2,
-    title: 'Build in Public',
-    category: 'Technology',
-    participants: 38200,
-    joined: false,
-    description: 'Share your progress while building something.'
-  },
-  {
-    id: 3,
-    title: 'Photography Challenge',
-    category: 'Creative',
-    participants: 9210,
-    joined: false,
-    description: 'Share your best photography with the community.'
-  }
-])
+const [challenges, setChallenges] = useState([])
+const [error, setError] = useState('')
+const [loading, setLoading] = useState(true)
+
+useEffect(() => {
+  fetch('http://localhost:3000/api/challenges')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch challenges')      
+      }
+      return response.json()
+    })
+    .then(data => {
+      setChallenges(data)
+      setLoading(false)
+      })
+      .catch(error => {
+        console.error('Error fetching challenges:', error)
+        setError('Unable to load challenges, please try again.')
+        setLoading(false)
+      })
+    }, [])
 
 function joinChallenge(id) {
   setChallenges(
@@ -75,6 +72,8 @@ function createChallenge(data) {
   return (
     <BrowserRouter>
       <Navbar />
+      {loading && <p>Loading challenges...</p>}
+      {error && <p>{error}</p>}
 
       <Routes>
         <Route path='/' element={<Home />} />

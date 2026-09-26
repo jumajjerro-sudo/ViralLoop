@@ -54,19 +54,29 @@ function joinChallenge(id) {
   )
 }
 
-function createChallenge(data) {
-  const newChallenge = {
-    id: Date.now(),
-    title: data.title,
-    category: data.category,
-    description: data.description,
-    participants: 0,
-    joined: false
-  }
-  setChallenges([
-    ...challenges, 
-    newChallenge
-  ])
+async function createChallenge(data) {
+  try {
+    const response = await fetch('http://localhost:3000/api/challenges', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    
+    if (!response.ok) {
+      throw new Error('Failed to create challenges')
+    }
+    
+    const newChallenge = await response.json()
+    setChallenges([
+      ...challenges, 
+      newChallenge
+    ])
+   }
+    catch (error) {
+      console.error('Error creating challenge:', error)
+    }
 }
 
   return (

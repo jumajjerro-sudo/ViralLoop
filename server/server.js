@@ -1,10 +1,10 @@
 import express from 'express'
-
 import cors from 'cors'
 
 const app = express()
 
 app.use(cors())
+app.use(express.json())
 
 const PORT = 3000
 
@@ -40,6 +40,20 @@ app.get('/', (req, res) => {
 
 app.get('/api/challenges', (req, res) => {
     res.json(challenges)
+})
+
+app.post('/api/challenges', (req, res) => {
+  const newChallenge = {
+    id: Date.now,
+    title: req.body.title,
+    category: req.body.category,
+    description: req.body.description,
+    participation: 0
+  }
+
+  challenges.push(newChallenge)
+
+  res.status(201).json(newChallenge)
 })
 
 app.listen(PORT, () => {

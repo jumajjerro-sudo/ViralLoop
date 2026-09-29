@@ -1,60 +1,69 @@
 import express from 'express'
 import cors from 'cors'
+import 'dotenv/config'
+import pg from 'pg'
+
+const { Pool } = pg
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
-const PORT = 3000
+  const PORT = 3000
 
-const challenges = [
-  {
-    id: 1,
-    title: '30 Day Fitness Challenge',
-    category: 'Fitness',
-    participants: 12450,
-    description: 'Complete a fitness activity every day for 30 days.'
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
   },
-  {
-    id: 2,
-    title: 'Build in Public',
-    category: 'Technology',
-    participants: 38200,
-    description: 'Share your progress while building something.'
-  },
-  {
-    id: 3,
-    title: 'Photography Challenge',
-    category: 'Creative',
-    participants: 9210,
-    description: 'Share your best photography with the community.'
-  }
-]
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 30000
+})
 
-app.get('/', (req, res) => {
-    res.send({
+app.get('/api', (req, res) => {
+    res.json({
         message: 'ViralLoop API is running!'
 })
 })
 
-app.get('/api/challenges', (req, res) => {
-    res.json(challenges)
+app.get('/api/challenges', async (req, res) => {
+    try {
+      const result = await pool.query(
+        'SELECT * FROM challenges ORDER BY id'
+      )
+
+      res.json(result.rows)
+    } catch (error) {
+      console.error('Error fetching challenges:', error)
+
+      res.status(500).json({
+        error: 'Failed to fetch challenges'
+      })
+    }
 })
 
-app.post('/api/challenges', (req, res) => {
-  const newChallenge = {
-    id: Date.now,
-    title: req.body.title,
-    category: req.body.category,
-    description: req.body.description,
-    participation: 0
-  }
+app.post('/api/challenges', async (req, res) => {
+  try {
+    const {title, category, description} = req.body
 
-  challenges.push(newChallenge)
+    const result = await pool.query(
+      `INSERT INTO challenges (title, category, description)
+      VALUES ($1, $2, $3)
+      RETURNING *`,
+      [title, category, description]
+    )
 
-  res.status(201).json(newChallenge)
-})
+    res.status(201).json(result.rows[0])
+  } catch (error) {
+    console.error('Error creating challenges:', error)
+
+
+    res.status(500).json({
+      error: 'Failed to create challenges'
+    })
+   }
+  })
 
 app.listen(PORT, () => {
     console.log(`ViralLoop backend is running on http://localhost:${PORT}`)

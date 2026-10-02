@@ -18,7 +18,12 @@ const pool = new Pool({
     rejectUnauthorized: false
   },
   connectionTimeoutMillis: 10000,
-  idleTimeoutMillis: 30000
+  idleTimeoutMillis: 10000,
+  max: 5
+})
+
+pool.on('error', (error) => {
+  console.error('Unexpected database pool error:', error)
 })
 
 app.get('/api', (req, res) => {
@@ -63,6 +68,27 @@ app.post('/api/challenges', async (req, res) => {
       error: 'Failed to create challenges'
     })
    }
+  })
+
+  app.post('/api/challenges/:id/join', async (req, res) => {
+    try {
+      const challengeId = req.params.id
+
+      const result = await pool.query(
+        `INSERT INTO participants (challenge_id)
+        VALUES ($1)
+        RETURNING *`,
+        [challengeId]
+      )
+
+      res.status(201).json(result.rows[0])
+    } catch (error) {
+      console.error('Error Joining challenges:', error)
+
+      res.status(500).json({
+        error: 'Failed to join challenge'
+      })
+    }
   })
 
 app.listen(PORT, () => {

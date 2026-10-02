@@ -32,16 +32,25 @@ useEffect(() => {
       })
     }, [])
 
-function joinChallenge(id) {
+async function joinChallenge(id) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/challenges/${id}/join`, {
+      method: 'POST'
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error('Failed to join challenge')
+  }
+
+  const participation = await response.json()
+
+  console.log('Joined challenge:', participation)
+
   setChallenges(
-    challenges.map(function(challenge) {
+    challenges.map( (challenge) => {
 
       if (challenge.id === id) {
-          
-          if (challenge.joined) {
-              return challenge
-          }
-
         return {
           ...challenge, 
           participants: challenge.participants + 1,
@@ -52,6 +61,9 @@ function joinChallenge(id) {
       return challenge
     })
   )
+ } catch (error) {
+   console.error('Error joining challenge:', error)
+  }
 }
 
 async function createChallenge(data) {
